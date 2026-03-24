@@ -19,7 +19,7 @@ spec:
       - name: github-secret      # <--- ¡AQUÍ ESTÁ LA LLAVE DE ACCESO!
       containers:
       - name: react-container
-        image: ghcr.io/fvasquez04/mi-web-react:v1  # <--- TU CAJA PRIVADA
+        image: ghcr.io/fvasquez04/mi-web-react:v2  # <--- TU CAJA PRIVADA
         ports:
         - containerPort: 80
 ---
