@@ -1,0 +1,40 @@
+# ==========================================
+# DESPLIEGUE DEL CONTENEDOR (2 RÉPLICAS)
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-react-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web-react
+  template:
+    metadata:
+      labels:
+        app: web-react
+    spec:
+      imagePullSecrets:
+      - name: github-secret      # <--- ¡AQUÍ ESTÁ LA LLAVE DE ACCESO!
+      containers:
+      - name: react-container
+        image: ghcr.io/fvasquez04/mi-web-react:v1  # <--- TU CAJA PRIVADA
+        ports:
+        - containerPort: 80
+---
+# ==========================================
+# SERVICIO (RED INTERNA Y PUERTA EXTERNA)
+# ==========================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-react-service
+spec:
+  type: NodePort
+  selector:
+    app: web-react
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30090              # Usaremos el puerto 30090 para ver tu web
